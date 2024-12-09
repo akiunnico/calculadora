@@ -15,7 +15,7 @@ h1{
     margin: auto;
     background-color: darkgreen;
     border-radius: 20%;
-    padding: 1em;
+    padding: 2em;
 }
 .pantalla{
     background-color: white;
@@ -23,25 +23,39 @@ h1{
     margin: .5em auto;
     padding: .2em .5em;
     text-align: right;
-    font-size: 2em;
+    font-size: 2.2em;
     border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.signo{
+    text-align: left;
+    display: inline-block;
 }
 .teclado{
     width: 90%;
     margin: auto;
     display: flex;
     flex-wrap: wrap;
-    gap: 2%;
+    gap: 3%;
     justify-content: center;
 }
 .tecla{
-    font-size: 1.2em;
+    font-size: 1.3em;
     font-weight: bolder;
-    padding: .5em;
+    padding: .4em;
     width: 14%;
     margin-bottom: .5em;
     border-radius: 10%;
     background-color: rgb(172, 168, 168);
-    color: rgb(10, 10, 10)
-
+    color: rgb(10, 10, 10);
+    border: none;
+    transition: background-color .3s;
+}
+.tecla:hover{
+    background-color: rgb(61, 59, 59);
+    color: rgb(175, 170, 170);
+}
+.tecla:active{
+    background-color: rgb(55, 201, 104);
 }
