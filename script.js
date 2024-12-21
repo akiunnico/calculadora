@@ -1,111 +1,96 @@
+let num1, num2, operador;
+
 const add = (num1, num2) => {return num1 + num2;}
 const substract = (num1, num2) => {return num1 - num2;}
 const multiply = (num1, num2) => {return num1 * num2;}
 const divide = (num1, num2) => {return num1 / num2;}
 
-let num1, num2;
-let operator = {};
-let display = "0";
-let resultado;
+function getOperacion (operador){
+    switch(operador){
+        case "+": return add;
+        case "-": return substract;
+        case "*": return multiply;
+        default: return divide
+    }
+}
 
-const numerador = document.querySelector(".numerador");
+const currentNumber = document.querySelector(".current-number");
+const previousNumber = document.querySelector(".previous-number");
 const numeros = document.querySelectorAll(".numero");
 const borrador = document.getElementById("clear");
 const backspace = document.getElementById("backspace");
 const punto = document.getElementById("punto");
 const operadores = document.querySelectorAll(".operador");
-const signo = document.querySelector(".signo");
 const igual = document.getElementById("igual");
 
 const escribe = (e) => {
-    if(resultado) borraResultado();
 
-    (display === "0")
-    ? display = e.target.textContent
-    : display += (e.target.textContent);
-
-    numerador.textContent = display;
-   
+   currentNumber.textContent += e.target.textContent;
  }
 
- const fillOperator = (e) => {
-    operator["name"] = e.target.id;
-    
-    switch(operator.name){
-        case "add" : 
-            operator.signo = "+";
-            operator.operacion = add;
-            break;
-        case "substract" : 
-            operator.signo = "-";
-            operator.operacion = substract;
-            break;
-        case "multiply" : 
-            operator.signo = "*";
-            operator.operacion = multiply;
-            break;
-        default: 
-            operator.signo = "/";
-            operator.operacion = divide;
-    }
- }
-const borraResultado = () => {
-        resultado = undefined;
-        display = "0";
+const resetea = () => {
+    num1 = num2 = operador = undefined;
+
 }
+
+const borra = () => {
+    currentNumber.textContent = " ";
+    previousNumber.textContent = " ";
+    resetea();  
+}
+
+const opera = () => {
+  
+    if(currentNumber.textContent === "") return;
+    if(!num1) return;
+    num2 = Number(currentNumber.textContent);
+    let operacion = getOperacion(operador);
+    console.log(num1, num2, operador, operacion);
+    currentNumber.textContent = (Math.round(operacion(num1, num2)* 10**8)/10**8).toString();
+    previousNumber.textContent = "";
+
+}
+const prepara = (e) => {
+    if(currentNumber.textContent === "") return;
+    if(previousNumber.textContent !== ""){
+        num1 = Number(previousNumber.textContent.slice(0, -1));
+        opera();
+    }
+        operador = e.target.textContent;
+        num1 = Number(currentNumber.textContent);
+        previousNumber.textContent = currentNumber.textContent +=   operador;
+        currentNumber.textContent = "";
+    
+}
+
 
 numeros.forEach(e => 
     e.addEventListener("click", escribe)
 )
+operadores.forEach(e => {
+    e.addEventListener("click", prepara);
+})
 
-borrador.addEventListener("click", (() => {
-    resultado = undefined;
-    signo.textContent = "";
-    display = "0";
-    numerador.textContent = display;
-}));
+borrador.addEventListener("click", borra);
 
 backspace.addEventListener("click", () => {
-    if(display.length === 1){
-        display = "0";
-        numerador.textContent = display;
-        return;
-    }
-    display = display.slice(0, -1);
-    numerador.textContent = display;
+  
+    display = currentNumber.textContent;
+    // if(display.length === 1) return;
+    currentNumber.textContent = display.slice(0, -1);
 
 })
 
 punto.addEventListener("click", () => {
-    if(resultado) borraResultado();
+    display = currentNumber.textContent;
     if(display.includes(".")) return;
-    (display === "0")
-        ? display = "0."
-        : display += ".";
-    numerador.textContent = display;
+    (!display)
+        ? currentNumber.textContent = "0."
+        : currentNumber.textContent += ".";
 })
 
-operadores.forEach(e => {
-    e.addEventListener("click", (element)=>{
-        if(display === "") return;
-        num1 =  parseFloat(display);
-        fillOperator(element);
-        display = "";
-        numerador.textContent = display;
-        signo.textContent = operator.signo;
-        
-    })
-})
 
-igual.addEventListener("click", () => {
-  
-    num2 = parseFloat(display);
-    display = (Math.round(operator.operacion(num1, num2)* 10**8)/10**8).toString();
-    resultado = true;
-    numerador.textContent = display;
-    signo.textContent = "";
-    
-})
-numerador.textContent = display;
+igual.addEventListener("click", opera);
+
 
 

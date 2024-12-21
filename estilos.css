@@ -1,7 +1,7 @@
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 }
 
 body{
@@ -20,17 +20,23 @@ h1{
 .pantalla{
     background-color: white;
     width: 90%;
-    margin: .5em auto;
-    padding: .2em .5em;
-    text-align: right;
-    font-size: 2.2em;
+    margin: .5em auto 1em;
     border-radius: 10px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+   
 }
-.signo{
-    text-align: left;
-    display: inline-block;
+.current-number{
+    height: 2.2rem;
+    padding: .1em .4em;
+    text-align: right;
+    font-size: 2rem;
+}
+.previous-number{
+    height: 1.6rem;
+    padding: .1em .4em;
+    text-align: right;
+    font-size: 1.4rem;
 }
 .teclado{
     width: 90%;
@@ -47,15 +53,31 @@ h1{
     width: 14%;
     margin-bottom: .5em;
     border-radius: 10%;
-    background-color: rgb(172, 168, 168);
-    color: rgb(10, 10, 10);
+    
     border: none;
     transition: background-color .3s;
 }
-.tecla:hover{
+.numero, #punto{
+    background-color: rgb(172, 168, 168);
+    color: rgb(10, 10, 10);
+
+}
+.numero:hover, .punto:hover{
     background-color: rgb(61, 59, 59);
     color: rgb(175, 170, 170);
 }
-.tecla:active{
+.numero:active, .punto:active{
     background-color: rgb(55, 201, 104);
+}
+.operador, #igual, #backspace, #clear{
+    background-color: rgb(71, 71, 156);
+    color: #eee;
+}
+.operador:hover, #igual:hover, #backspace:hover, #clear:hover{
+    background-color: rgb(17, 17, 63);
+   
+}
+.operador:active, #igual:active, #backspace:active, #clear:active{
+    background-color: rgb(44, 44, 245);
+   
 }
